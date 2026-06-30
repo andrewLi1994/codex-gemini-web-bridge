@@ -932,58 +932,72 @@ var GeminiBrowserBridge = class {
       await this.shutdownBrowser(port);
     }
   }
+  async spawnLoginBrowser(signal) {
+    await this.shutdownBrowser(await readActivePort());
+    const executable = await this.findBrowser();
+    if (executable == null) {
+      throw new GeminiBridgeError(
+        "BROWSER_NOT_FOUND",
+        "No compatible browser was found. Install Google Chrome before using Gemini Web Bridge."
+      );
+    }
+    const args = [
+      `--user-data-dir=${paths.profile}`,
+      "--no-first-run",
+      "--no-default-browser-check",
+      "--window-size=1440,1000",
+      "--new-window",
+      GEMINI_HOME
+    ];
+    return spawn(executable, args, { detached: true, stdio: "ignore" });
+  }
   async launchHumanLogin({ signal, wait = true } = {}, onProgress) {
     return withFileLock(
       paths.browserLock,
       { label: "Gemini Web browser", signal },
       async () => {
-        const port = await this.spawnBrowser({ headless: false, signal });
+        const child = await this.spawnLoginBrowser(signal);
         await onProgress?.(
-          "Sign in to Gemini in the visible browser, then close the entire dedicated window.",
+          "Sign in to Gemini in the visible browser, then fully Quit (Cmd+Q) the browser when done.",
           10
         );
         if (!wait) {
+          child.unref();
           return { loginVerified: false, message: "Gemini login window opened.", profile: paths.profile };
         }
-        const deadline = Date.now() + LOGIN_TIMEOUT_MS;
-        let interactivePageObserved = false;
+        let exited = false;
+        child.on("exit", () => {
+          exited = true;
+        });
+        const startedAt = Date.now();
+        const deadline = startedAt + LOGIN_TIMEOUT_MS;
         while (Date.now() < deadline) {
           if (signal?.aborted) {
-            await this.shutdownBrowser(port);
+            if (!exited) child.kill();
             throw new GeminiBridgeError("CANCELLED", "Login was cancelled.");
           }
-          try {
-            const targets = await fetchTargets(port);
-            const pages = targets.filter(({ type }) => type === "page");
-            if (pages.some(({ url }) => /gemini\.google\.com|accounts\.google\.com/i.test(url ?? ""))) {
-              interactivePageObserved = true;
-            }
-            if (interactivePageObserved && pages.length === 0) {
-              await this.shutdownBrowser(port);
-              await delay2(500);
-              const loginVerified = await this.verifyLogin(onProgress, signal);
-              return {
-                loginVerified,
-                message: "Gemini login verified.",
-                profile: paths.profile
-              };
-            }
-          } catch {
-            await delay2(500);
-            const loginVerified = await this.verifyLogin(onProgress, signal);
-            return {
-              loginVerified,
-              message: "Gemini login verified.",
-              profile: paths.profile
-            };
-          }
+          if (exited) break;
           await delay2(750);
         }
-        await this.shutdownBrowser(port);
-        throw new GeminiBridgeError(
-          "LOGIN_TIMEOUT",
-          "The Gemini login window remained open for more than 10 minutes."
-        );
+        if (!exited) {
+          child.kill();
+          const killDeadline = Date.now() + 3e3;
+          while (!exited && Date.now() < killDeadline) await delay2(200);
+        }
+        child.unref();
+        if (Date.now() >= deadline && !exited) {
+          throw new GeminiBridgeError(
+            "LOGIN_TIMEOUT",
+            "The Gemini login window remained open for more than 10 minutes."
+          );
+        }
+        await delay2(500);
+        const loginVerified = await this.verifyLogin(onProgress, signal);
+        return {
+          loginVerified,
+          message: "Gemini login verified.",
+          profile: paths.profile
+        };
       }
     );
   }
