@@ -43,6 +43,34 @@ Compare the claims in these two public YouTube videos and check where their evid
 
 Codex decides whether to use one Gemini conversation, several fresh conversations, follow-up prompts, or no Gemini call at all. A local random conversation handle is returned after each successful fresh call; videos and Codex threads do not automatically select or reuse conversations.
 
+## MCP Client Configuration
+
+Since Gemini Web Bridge is a standard MCP server, you can configure it in other MCP-compatible clients.
+
+### Claude Desktop
+Add the following to your configuration file (located at `~/Library/Application Support/Claude/claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "gemini-web-bridge": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/gemini-web-bridge/plugins/gemini-web-bridge/dist/mcp-server.mjs"
+      ]
+    }
+  }
+}
+```
+*Note: Remember to replace `/absolute/path/to` with the actual path of this project on your system. Completely restart Claude Desktop after editing.*
+
+### Cursor
+You can configure it via the Cursor settings UI:
+1. Open **Cursor Settings** > **MCP**.
+2. Click **+ Add New MCP Server**.
+3. Set the Name to `gemini-web-bridge`, Type to `stdio`.
+4. Set the Command to `node "/absolute/path/to/gemini-web-bridge/plugins/gemini-web-bridge/dist/mcp-server.mjs"`.
+
 ## First use
 
 1. Codex asks once for permission to send only minimum necessary public URLs, scoped questions, language, and output requirements to Gemini Web.

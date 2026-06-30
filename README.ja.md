@@ -43,6 +43,34 @@ Compare the claims in these two public YouTube videos and check where their evid
 
 Codex は、単一の Gemini 会話を使用するか、複数の新規会話を使用するか、追加のプロンプトを送信するか、あるいは Gemini を呼び出さないかを自律的に決定します。新規の呼び出しが成功するたびに、ローカルのランダムな会話ハンドルが返されます。動画や Codex スレッドは、自動的に会話を選択または再利用しません。
 
+## MCP クライアントの設定
+
+Gemini Web Bridge は標準的な MCP サーバーであるため、他の MCP 互換クライアントでも設定できます。
+
+### Claude Desktop
+設定ファイル（パス：`~/Library/Application Support/Claude/claude_desktop_config.json`）に以下を追加します：
+
+```json
+{
+  "mcpServers": {
+    "gemini-web-bridge": {
+      "command": "node",
+      "args": [
+        "/プロジェクトの絶対パス/gemini-web-bridge/plugins/gemini-web-bridge/dist/mcp-server.mjs"
+      ]
+    }
+  }
+}
+```
+*注意：`/プロジェクトの絶対パス/` は、ローカル環境における実際のプロジェクトの絶対パスに置き換えてください。保存後、Claude Desktop を完全に再起動する必要があります。*
+
+### Cursor
+Cursor の設定画面から直接設定できます：
+1. **Cursor Settings** > **MCP** を開きます。
+2. **+ Add New MCP Server** をクリックします。
+3. Name に `gemini-web-bridge`、Type に `stdio` を指定します。
+4. Command に `node "/プロジェクトの絶対パス/gemini-web-bridge/plugins/gemini-web-bridge/dist/mcp-server.mjs"` を入力します。
+
 ## 初回起動時の手順
 
 1. Codex は、最小限の必要な公開 URL、特定範囲の質問、言語、および出力要件のみを Gemini Web に送信するための許可を 1 回だけ求めます。

@@ -43,6 +43,34 @@ codex plugin marketplace upgrade gemini-web-bridge
 
 Codex 自行决定使用一个 Gemini 对话、多个全新对话、继续追问，或者完全不调用 Gemini。每次成功新建对话后都会返回一个本地随机句柄；视频和 Codex 线程不会自动选择或复用对话。
 
+## MCP 客户端配置
+
+由于 Gemini Web Bridge 是一个标准的 MCP 服务端，您可以在其他支持 MCP 协议的客户端中对其进行配置。
+
+### Claude Desktop
+将以下配置添加到您的配置文件中（路径为 `~/Library/Application Support/Claude/claude_desktop_config.json`）：
+
+```json
+{
+  "mcpServers": {
+    "gemini-web-bridge": {
+      "command": "node",
+      "args": [
+        "/您的项目绝对路径/gemini-web-bridge/plugins/gemini-web-bridge/dist/mcp-server.mjs"
+      ]
+    }
+  }
+}
+```
+*注意：请将 `/您的项目绝对路径/` 替换为该项目在您本地文件系统中的真实绝对路径。保存配置后，必须完全重启 Claude Desktop 生效。*
+
+### Cursor
+您可以通过 Cursor 的图形界面直接进行配置：
+1. 打开 **Cursor Settings** > **MCP**。
+2. 点击 **+ Add New MCP Server**。
+3. 设置 Name 为 `gemini-web-bridge`，Type 选择 `stdio`。
+4. 设置 Command 为 `node "/您的项目绝对路径/gemini-web-bridge/plugins/gemini-web-bridge/dist/mcp-server.mjs"`。
+
 ## 首次使用
 
 1. Codex 只请求一次授权，允许发送最少必要的公共 URL、具体问题、语言和输出要求。
