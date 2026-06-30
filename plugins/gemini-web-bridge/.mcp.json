@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "gemini-web-bridge": {
+      "command": "node",
+      "args": ["./dist/mcp-server.mjs"],
+      "cwd": ".",
+      "tool_timeout_sec": 600
+    }
+  }
+}

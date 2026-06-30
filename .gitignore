@@ -1,0 +1,17 @@
+.DS_Store
+**/.DS_Store
+**/node_modules/
+*.log
+coverage/
+test-results/
+.env
+.env.*
+!.env.example
+
+# Runtime identity, browser profiles, consent, and conversation mappings.
+local-state/
+runtime-state/
+Chrome Profile/
+DevToolsActivePort
+settings.json
+sessions.json

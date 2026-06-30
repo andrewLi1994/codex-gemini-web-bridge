@@ -1,0 +1,24 @@
+{
+  "name": "gemini-web-bridge",
+  "version": "0.1.0",
+  "description": "Analyze public YouTube videos through the user's logged-in Gemini Web session.",
+  "author": {
+    "name": "Andrew Li"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Gemini Web Bridge",
+    "shortDescription": "Ask Gemini Web about public YouTube videos",
+    "longDescription": "Lets Codex send a public YouTube URL and a scoped question to a dedicated, locally controlled Gemini Web browser session, then receive the complete answer as a tool result. Experimental and currently macOS-only.",
+    "developerName": "Andrew Li",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read"
+    ],
+    "defaultPrompt": [
+      "\u5206\u6790\u8fd9\u4e2a YouTube \u89c6\u9891\u5e76\u7ed9\u51fa\u5e26\u65f6\u95f4\u70b9\u7684\u5173\u952e\u7ed3\u8bba"
+    ]
+  },
+  "mcpServers": "./.mcp.json"
+}

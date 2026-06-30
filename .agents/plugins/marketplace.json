@@ -1,0 +1,20 @@
+{
+  "name": "codex-gemini-web-bridge",
+  "interface": {
+    "displayName": "Gemini Web Bridge"
+  },
+  "plugins": [
+    {
+      "name": "gemini-web-bridge",
+      "source": {
+        "source": "local",
+        "path": "./plugins/gemini-web-bridge"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

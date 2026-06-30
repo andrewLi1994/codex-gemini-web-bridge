@@ -1,0 +1,13 @@
+{
+  "name": "codex-gemini-web-bridge-marketplace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build --prefix plugins/gemini-web-bridge",
+    "test": "npm test --prefix plugins/gemini-web-bridge",
+    "check": "npm run check --prefix plugins/gemini-web-bridge",
+    "audit": "npm audit --prefix plugins/gemini-web-bridge",
+    "verify": "npm run build && npm run test && npm run check && npm run audit"
+  }
+}
