@@ -12,8 +12,8 @@ const {
   GeminiBrowserBridge,
   normalizeBridgeError,
   shouldRetryBridgeError,
-} = await import("../scripts/gemini-browser.mjs");
-const { buildGeminiPrompt, canonicalizeYoutubeUrl } = await import("../scripts/youtube.mjs");
+} = await import("../src/gemini-browser.mjs");
+const { buildGeminiPrompt, canonicalizeYoutubeUrl } = await import("../src/youtube.mjs");
 
 test("bridge errors preserve submission phase and retry safety", () => {
   const error = new GeminiBridgeError("NO_RESPONSE", "no response", {

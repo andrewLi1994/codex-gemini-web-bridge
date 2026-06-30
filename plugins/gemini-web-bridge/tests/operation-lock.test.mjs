@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 
-import { acquireFileLock } from "../scripts/operation-lock.mjs";
+import { acquireFileLock } from "../src/operation-lock.mjs";
 
 test("a second process-level operation waits for the active lock", async () => {
   const root = await mkdtemp(join(tmpdir(), "gemini-bridge-lock-"));

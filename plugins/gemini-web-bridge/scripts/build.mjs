@@ -18,8 +18,8 @@ const result = await build({
   bundle: true,
   entryNames: "[name]",
   entryPoints: {
-    "gemini-web-cli": "scripts/cli.mjs",
-    "mcp-server": "scripts/mcp-server.mjs",
+    "gemini-web-cli": "src/cli.mjs",
+    "mcp-server": "src/mcp-server.mjs",
   },
   format: "esm",
   legalComments: "external",

@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Please use [GitHub private vulnerability reporting](https://github.com/andrewLi1994/codex-gemini-web-bridge/security/advisories/new) for security issues. Do not include Google cookies, Chrome profile files, Codex transcripts, or other credentials in a public issue.
+Please use [GitHub private vulnerability reporting](https://github.com/andrewLi1994/gemini-web-bridge/security/advisories/new) for security issues. Do not include Google cookies, Chrome profile files, Codex transcripts, or other credentials in a public issue.
 
 Public bug reports are appropriate for non-sensitive failures such as a changed Gemini page layout, unsupported browser detection, or reproducible installation errors.
 

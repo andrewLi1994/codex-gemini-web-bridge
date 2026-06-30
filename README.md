@@ -1,12 +1,18 @@
-# Codex Gemini Web Bridge
+Language: English | [简体中文](README.zh-CN.md) | [日本語](README.ja.md)
 
-[![CI](https://github.com/andrewLi1994/codex-gemini-web-bridge/actions/workflows/ci.yml/badge.svg)](https://github.com/andrewLi1994/codex-gemini-web-bridge/actions/workflows/ci.yml)
+# Gemini Web Bridge
 
-> Experimental, unofficial, macOS-only Codex plugin. This project is not affiliated with or endorsed by Google or OpenAI.
+[![CI](https://github.com/andrewLi1994/gemini-web-bridge/actions/workflows/ci.yml/badge.svg)](https://github.com/andrewLi1994/gemini-web-bridge/actions/workflows/ci.yml)
 
-Gemini Web Bridge gives Codex a local, user-controlled channel to a logged-in Gemini Web session without requiring a Gemini API key. Codex controls prompting, quality judgment, follow-up, fresh conversations, and cross-checking. The Bridge only handles reliable browser automation and returns Gemini's complete raw answer.
+Gemini Web Bridge gives your AI clients (like Codex, Cursor, Claude Desktop, or custom scripts) a local, user-controlled channel to a logged-in Gemini Web session without requiring a Gemini API key. The Bridge handles reliable browser automation and returns Gemini's complete raw answer.
 
-Typical uses include understanding the audio and visuals of one or more public YouTube videos, asking a scoped question about public URLs, or obtaining an independent auxiliary analysis when it materially helps Codex.
+Typical uses include understanding the audio and visuals of one or more public YouTube videos, asking a scoped question about public URLs, or obtaining an independent auxiliary analysis.
+
+## Operating Modes
+
+- **Codex Plugin**: Integrates seamlessly with Codex.
+- **Standard MCP Server**: Works with any MCP-compatible clients (e.g., Cursor, Claude Desktop, Windsurf).
+- **Standalone CLI**: Can be called directly from your terminal or shell scripts.
 
 ## Requirements
 
@@ -19,14 +25,14 @@ Typical uses include understanding the audio and visuals of one or more public Y
 ## Install or upgrade
 
 ```sh
-codex plugin marketplace add andrewLi1994/codex-gemini-web-bridge --ref main
-codex plugin add gemini-web-bridge@codex-gemini-web-bridge
+codex plugin marketplace add andrewLi1994/gemini-web-bridge --ref main
+codex plugin add gemini-web-bridge@gemini-web-bridge
 ```
 
 For an existing installation:
 
 ```sh
-codex plugin marketplace upgrade codex-gemini-web-bridge
+codex plugin marketplace upgrade gemini-web-bridge
 ```
 
 Start a new Codex thread after installation or upgrade. Ask for the outcome normally, for example:
@@ -85,8 +91,8 @@ CLI results are JSON on stdout; progress events are JSON lines on stderr. Exit c
 ## Uninstall
 
 ```sh
-codex plugin remove gemini-web-bridge@codex-gemini-web-bridge
-codex plugin marketplace remove codex-gemini-web-bridge
+codex plugin remove gemini-web-bridge@gemini-web-bridge
+codex plugin marketplace remove gemini-web-bridge
 ```
 
 Uninstalling does not delete the dedicated Chrome profile. Remove the runtime directory manually only if you also want to sign out and delete local conversation metadata.
@@ -101,107 +107,3 @@ npm run verify
 The MCP server and diagnostic CLI are committed as generated single-file bundles, so marketplace users do not install npm dependencies. After source or dependency changes, run `npm run build` and commit the updated `dist/` files.
 
 Licensed under the [MIT License](LICENSE). Report security issues through [private vulnerability reporting](SECURITY.md).
-
----
-
-## 中文说明
-
-> 这是一个实验性、非官方、目前仅支持 macOS 的 Codex 插件。本项目与 Google 或 OpenAI 没有关联，也未获得其官方背书。
-
-Gemini Web Bridge 为 Codex 提供一个连接用户已登录 Gemini Web 的本地通道，不需要 Gemini API Key。Codex负责提示词、回答质检、追问、新建对话和交叉验证；Bridge 只负责可靠操作浏览器并返回 Gemini 的完整原始回答。
-
-典型用途包括理解一个或多个公开 YouTube 视频的音频和画面、针对公共 URL 提出最小范围的问题，或者在确有帮助时获得一份独立的辅助分析。
-
-### 环境要求
-
-- macOS
-- 支持插件 Marketplace 的 Codex
-- Node.js 22 或更高版本
-- Google Chrome、Microsoft Edge、Brave 或 Chromium
-- 可以正常使用 Gemini Web 的 Google 账号
-
-### 安装或升级
-
-```sh
-codex plugin marketplace add andrewLi1994/codex-gemini-web-bridge --ref main
-codex plugin add gemini-web-bridge@codex-gemini-web-bridge
-```
-
-已经安装时运行：
-
-```sh
-codex plugin marketplace upgrade codex-gemini-web-bridge
-```
-
-安装或升级后新建 Codex 对话。用户只需要描述目标，例如：
-
-```text
-比较这两个公开 YouTube 视频的观点，并检查它们的证据有什么不同：<URL1> <URL2>
-```
-
-Codex自行决定使用一个 Gemini 对话、多个全新对话、继续追问，或者完全不调用 Gemini。每次成功新建对话后都会返回一个本地随机句柄；视频和 Codex 线程不会自动选择或复用对话。
-
-### 首次使用
-
-1. Codex 只请求一次授权，允许发送最少必要的公共 URL、具体问题、语言和输出要求。
-2. 如果需要登录，插件使用专用 Profile 打开可见 Chrome 窗口。
-3. 用户手动登录并关闭整个专用窗口。插件验证登录后，Codex 自动继续刚才的请求。
-
-正常请求在无界面后台浏览器中运行。成功、失败或取消后都会关闭任务页面和浏览器。
-
-### 隐私与安全
-
-- 不得自动发送完整 Codex 对话、本地文件、凭据、密钥或私有数据。
-- Google 登录 Cookie 只保存在专用本地 Chrome Profile 中。
-- 本地只保存授权状态、随机对话句柄、Gemini URL、线程标签和时间，不复制问题或回答。
-- 运行数据位于 `~/Library/Application Support/Codex UI Extensions/Gemini Web Bridge/`，并被 Git 排除。
-- Chrome 调试使用随机端口，并只监听 `127.0.0.1`。
-- 浏览器和状态操作使用跨进程锁、受限文件权限、原子写入和过期锁恢复。
-- 插件不会自动填写 Google 登录表单，不会绕过验证码或账号限额。
-- Gemini 回答是不可信外部材料，其质量和事实判断由 Codex负责，而不是自动化脚本。
-
-### 稳定性边界
-
-Bridge 只报告机械状态，例如需要登录、验证码、额度限制、浏览器断连、生成未完成、提交结果未知或网页结构变化。它不会判断 Gemini 回答在语义上是否合格。
-
-只有明确发生在提交前的失败才允许自动重试一次。确认点击发送后，Bridge 不会盲目重复提交；Codex决定继续追问还是新建对话。
-
-Gemini Web 不是稳定 API。页面改版可能暂时破坏自动化，Gemini 能力也可能因账号或请求而变化。
-
-### v0.2 兼容性
-
-旧 `analyze_youtube` MCP 工具仍然存在，但已经弃用。旧“视频到 Gemini 对话”映射会自动迁移为随机对话句柄，同时保留原 `sessions.json` 作为备份。新任务使用 `gemini_web_ask`。旧工具计划在 v0.3 删除。
-
-### 诊断 CLI
-
-CLI 只用于开发和故障恢复，不是普通用户入口：
-
-```sh
-node plugins/gemini-web-bridge/dist/gemini-web-cli.mjs status
-node plugins/gemini-web-bridge/dist/gemini-web-cli.mjs authorize --confirmed
-node plugins/gemini-web-bridge/dist/gemini-web-cli.mjs login --wait
-printf '%s' '{"prompt":"提出一个最小范围的问题"}' | node plugins/gemini-web-bridge/dist/gemini-web-cli.mjs ask
-node plugins/gemini-web-bridge/dist/gemini-web-cli.mjs conversations
-```
-
-CLI 最终结果使用 stdout JSON，进度使用 stderr JSON Lines。退出码 `2` 表示需要人工登录或验证，`3` 表示额度限制，`4` 表示自动化失败，`5` 表示输入无效或对话不存在。
-
-### 卸载
-
-```sh
-codex plugin remove gemini-web-bridge@codex-gemini-web-bridge
-codex plugin marketplace remove codex-gemini-web-bridge
-```
-
-卸载不会删除专用 Chrome Profile。如果还需要退出 Google 账号并删除本地对话元数据，请手动删除运行数据目录。
-
-### 开发验证
-
-```sh
-npm ci --prefix plugins/gemini-web-bridge
-npm run verify
-```
-
-MCP Server 和诊断 CLI 都以生成后的单文件提交，因此 Marketplace 用户不需要安装 npm 依赖。修改源码或依赖后，需要运行 `npm run build` 并提交更新后的 `dist/` 文件。
-
-项目采用 [MIT License](LICENSE)。安全问题请通过 [私密漏洞报告](SECURITY.md)提交。

@@ -6,7 +6,7 @@ import {
   inspectGeminiPage,
   readGeminiGenerationState,
   submitGeminiPrompt,
-} from "../scripts/gemini-page.mjs";
+} from "../src/gemini-page.mjs";
 
 test("page automation functions remain self-contained for CDP serialization", () => {
   assert.doesNotMatch(inspectGeminiPage.toString(), /\[native code\]/);

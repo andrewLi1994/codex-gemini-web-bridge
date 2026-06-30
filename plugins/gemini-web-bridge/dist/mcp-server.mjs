@@ -21101,11 +21101,11 @@ var StdioServerTransport = class {
   }
 };
 
-// scripts/gemini-browser.mjs
+// src/gemini-browser.mjs
 import { spawn } from "node:child_process";
 import { readFile as readFile3 } from "node:fs/promises";
 
-// scripts/cdp-client.mjs
+// src/cdp-client.mjs
 var CdpClient = class {
   constructor(webSocketUrl) {
     this.nextId = 1;
@@ -21188,7 +21188,7 @@ var CdpClient = class {
   }
 };
 
-// scripts/gemini-page.mjs
+// src/gemini-page.mjs
 function inspectGeminiPage() {
   const composer = document.querySelector(
     'div[contenteditable="true"], .prompt-textfield, textarea'
@@ -21405,7 +21405,7 @@ async function cancelGeminiGeneration() {
   return false;
 }
 
-// scripts/operation-lock.mjs
+// src/operation-lock.mjs
 import { mkdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
 var delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -21487,7 +21487,7 @@ async function withFileLock(lockPath, options, operation) {
   }
 }
 
-// scripts/state-store.mjs
+// src/state-store.mjs
 import { chmod, mkdir as mkdir2, open, readFile as readFile2, rename } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
@@ -21682,7 +21682,7 @@ async function findLegacyConversation(videoId) {
   return matched == null ? null : { conversationId: matched[0], ...normalizeConversation(matched[1]) };
 }
 
-// scripts/youtube.mjs
+// src/youtube.mjs
 var YOUTUBE_ID_PATTERN = /^[A-Za-z0-9_-]{6,20}$/;
 function canonicalizeYoutubeUrl(value) {
   let parsed;
@@ -21730,7 +21730,7 @@ ${cleanQuestion}
 \u8BF7\u4F7F\u7528 ${language} \u5B8C\u6574\u56DE\u7B54\u3002\u4F18\u5148\u5F15\u7528\u51C6\u786E\u65F6\u95F4\u70B9\uFF1B\u6D89\u53CA\u7EDF\u8BA1\u3001\u6BD4\u5206\u3001\u6B65\u9AA4\u6216\u4EBA\u7269\u65F6\u7ED9\u51FA\u53EF\u6838\u67E5\u7684\u660E\u7EC6\u3002\u5982\u679C\u65E0\u6CD5\u8BBF\u95EE\u89C6\u9891\u5185\u5BB9\uFF0C\u8BF7\u76F4\u63A5\u8BF4\u660E\uFF0C\u4E0D\u8981\u4EC5\u51ED\u6807\u9898\u6216\u7F29\u7565\u56FE\u731C\u6D4B\u3002`;
 }
 
-// scripts/gemini-browser.mjs
+// src/gemini-browser.mjs
 var CHROME_CANDIDATES = [
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
@@ -22302,7 +22302,7 @@ Local request marker: ${requestMarker} (do not repeat this marker in the answer)
   }
 };
 
-// scripts/mcp-server.mjs
+// src/mcp-server.mjs
 var bridge = new GeminiBrowserBridge();
 var ownerThreadId = process.env.CODEX_THREAD_ID ?? null;
 var queue = Promise.resolve();

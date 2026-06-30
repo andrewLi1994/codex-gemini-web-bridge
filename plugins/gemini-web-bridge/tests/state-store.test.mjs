@@ -13,7 +13,7 @@ const {
   listConversations,
   paths,
   saveConversation,
-} = await import("../scripts/state-store.mjs");
+} = await import("../src/state-store.mjs");
 
 test("legacy video mappings migrate once into random conversation handles", async () => {
   await writeFile(
